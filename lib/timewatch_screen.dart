@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart'; // 'matertal.dart'를 'material.dart'로 수정
 
 class TimewatchScreen extends StatefulWidget {
@@ -9,6 +11,29 @@ class TimewatchScreen extends StatefulWidget {
 
 
 class _TimewatchScreenState extends State<TimewatchScreen> {
+  Timer? _timer;
+
+  int _time = 0;
+
+  bool _isRunnung = false;
+
+  List<String> _lapTimes = [];
+
+  void _clickButton() {
+    _isRunnung = !_isRunnung;
+    if (_isRunnung) {
+      _start();
+    } else {
+      _pause();
+    }
+  }
+  void _start() {}
+  void _pause() {}
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +80,15 @@ class _TimewatchScreenState extends State<TimewatchScreen> {
               ),
               FloatingActionButton(
                 backgroundColor: Colors.red,
-                onPressed: () {},
-                child: const Icon(Icons.play_arrow),
+                onPressed: () {
+                  setState(() {
+                    _clickButton();
+                  });
+
+                },
+                child: _isRunnung 
+                    ? const Icon(Icons.pause)
+                    : const Icon(Icons.play_arrow),
               ),
               FloatingActionButton(
                 backgroundColor: Colors.green,
