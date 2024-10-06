@@ -48,6 +48,9 @@ class _TimewatchScreenState extends State<TimewatchScreen> {
     _lapTimes.clear();
     _time = 0;
   }
+  void _recordLapTime(String time) {
+    _lapTimes.insert(0, '${_lapTimes.length + 1}. $time');
+  }
   @override
   Widget build(BuildContext context) {
     int sec = _time ~/ 100;
@@ -76,14 +79,8 @@ class _TimewatchScreenState extends State<TimewatchScreen> {
             width: 100,
             height: 200,
             child: ListView(
-              children: [
-                Center(child: Text('111')),
-                Center(child: Text('111')),
-                Center(child: Text('111')),
-                Center(child: Text('111')),
-                Center(child: Text('111')),
-                Center(child: Text('111')),
-              ],
+              children: _lapTimes.map((time) =>
+                  Center(child: Text(time))).toList(),
             ),
           ),
           const Spacer(),
@@ -113,7 +110,11 @@ class _TimewatchScreenState extends State<TimewatchScreen> {
               ),
               FloatingActionButton(
                 backgroundColor: Colors.green,
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _recordLapTime('$sec.$hundredth');
+                  });
+                },
                 child: Icon(Icons.add),
               ),
             ],
