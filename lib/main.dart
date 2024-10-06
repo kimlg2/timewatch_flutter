@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:timewatch_flutter/timewatch_screen.dart';
 
 void main() {
+  Timer.periodic(Duration(seconds: 1), (timer) {
+    print('1111');
+  });
+  
   runApp(const MyApp());
 }
 
