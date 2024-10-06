@@ -27,15 +27,31 @@ class _TimewatchScreenState extends State<TimewatchScreen> {
       _pause();
     }
   }
-  void _start() {}
-  void _pause() {}
+  void _start() {
+    _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+     setState(() {
+       _time++;
+     });
+    });
+  }
+  void _pause() {
+    _timer?.cancel();
+  }
   @override
   void dispose() {
     _timer?.cancel();
     super.dispose();
   }
+  void _reset() {
+    _isRunnung = false;
+    _timer?.cancel();
+    _lapTimes.clear();
+    _time = 0;
+  }
   @override
   Widget build(BuildContext context) {
+    int sec = _time ~/ 100;
+    String hundredth = '${_time % 100}'.padLeft(2,'0');
     return Scaffold(
       appBar: AppBar(
         title: const Text('타임워치'),
@@ -46,12 +62,13 @@ class _TimewatchScreenState extends State<TimewatchScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.end,
-            children: const [
+            children:  [
                Text(
-                 '0', style: TextStyle(fontSize: 50),
+                 '$sec',
+                 style: TextStyle(fontSize: 50),
               ),
               Text(
-                '00',
+                '$hundredth',
               ),
             ],
           ),
@@ -75,7 +92,11 @@ class _TimewatchScreenState extends State<TimewatchScreen> {
             children: [
               FloatingActionButton(
                 backgroundColor: Colors.blue,
-                onPressed: () {},
+                onPressed: () {
+                  setState(() {
+                    _reset();
+                  });
+                },
                 child: const Icon(Icons.refresh),
               ),
               FloatingActionButton(
