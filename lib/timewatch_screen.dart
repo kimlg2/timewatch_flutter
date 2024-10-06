@@ -8,7 +8,6 @@ class TimewatchScreen extends StatefulWidget {
 }
 
 
-
 class _TimewatchScreenState extends State<TimewatchScreen> {
   @override
   Widget build(BuildContext context) {
